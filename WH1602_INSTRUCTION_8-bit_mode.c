@@ -352,7 +352,7 @@ void WH1602_FunctionSet(bool DLbit,bool Nbit,bool Fbit,bool FT1bit,bool FT0bit)	
 	State_E_DataReadWrite();
 }
 //запись адреса CGRAM в счетчик адресов
-void WH1602_SetCGRAMAddress(address)	{
+void WH1602_SetCGRAMAddress(unsigned char address)	{
 	WH1602_RS_PORT&=~_BV(WH1602_RS_LEG);
 	WH1602_RW_PORT&=~_BV(WH1602_RW_LEG);
 	WH1602_DB7_PORT&=~_BV(WH1602_DB7_LEG);
@@ -385,7 +385,7 @@ void WH1602_SetCGRAMAddress(address)	{
 	State_E_DataReadWrite();	
 }
 //запись адреса DDRAM в счетчик адресов
-void WH1602_SetDDRAMAddress(address)	{
+void WH1602_SetDDRAMAddress(unsigned char address)	{
 	WH1602_RS_PORT&=~_BV(WH1602_RS_LEG);
 	WH1602_RW_PORT&=~_BV(WH1602_RW_LEG);
 	WH1602_DB7_PORT|=_BV(WH1602_DB7_LEG);
@@ -473,7 +473,7 @@ char WH1602_ReadAddress()	{
 	return(BusyFlag, address);
 }
 //запись 8-битных значений данных в CGRAM или DDRAM
-void WH1602_WriteData(data)	{
+void WH1602_WriteData(unsigned char data)	{
 	WH1602_RS_PORT|=_BV(WH1602_RS_LEG);
 	WH1602_RW_PORT&=~_BV(WH1602_RW_LEG);
 	if(data&BIT_7_MASK)
@@ -532,36 +532,6 @@ char WH1602_ReadData()	{
 //*********************************************************************
 
 
-/*
-//функция инициализации дисплея в 8-битном режиме
-void LCD_WH1602_Init(void)	{
-	//настройка портов МК подключенных к LCD
-	LCD_INSTRUCTION_DDR|=INSTRUCTION_BUS;
-	LCD_INSTRUCTION_PORT=0x00;
-	LCD_DATA_DDR|=DATA_BUS;
-	LCD_DATA_PORT=0x00;
-	//задержка для стабилизации питания
-	_delay_ms(100);
-	//функция установки
-	LCD_W1602_FunctionSet(DL,N,F,FT1,FT0);
-	//проверка Busy Flag
-	LCD_W1602_BusyFlag();
-	//включение дисплея
-	LCD_W1602_DisplayONOff();
-	//проверка Busy Flag
-	LCD_W1602_BusyFlag();
-	//очистка дисплея
-	LCD_W1602_DisplayClear();
-	//проверка Busy Flag
-	LCD_W1602_BusyFlag();
-	//выбор режима ввода
-	LCD_W1602_EntryModeSet();
-	//проверка Busy Flag
-	LCD_W1602_BusyFlag();
-}
-*/
-
-
 void main (void)	{
 	DDRA=0x00;
 	PORTA=0x00;
@@ -577,18 +547,5 @@ void main (void)	{
 	PORTF=0x00;
 
 	while (1)	{
-/*
-DDRE=0xff;
-PORTE=0b00001111;
-_delay_ms(1000);
-PORTE&=~(1<<3);
-_delay_ms(1000);
-PORTE&=~(_BV(2));
-_delay_ms(1000);
-PORTE|=_BV(PE2);
-_delay_ms(1000);
-PORTE&=~((1<<0)|(_BV(1))|(_BV(PE2)));
-_delay_ms(1000);
-*/
 	}
 }
